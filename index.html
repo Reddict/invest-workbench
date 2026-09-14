@@ -89,6 +89,8 @@
   .hint{font-size:12.5px; color:var(--sub); margin-top:8px;}
   .toast{position:fixed; right:22px; bottom:26px; background:#1f2a44; color:#fff;
     padding:10px 18px; border-radius:8px; font-size:13px; opacity:0; transition:.25s; pointer-events:none;}
+  .online{margin-top:7px}
+  .online a{color:#7db4ff}
   .toast.on{opacity:1;}
   @media (max-width:700px){ table{font-size:12px;} th,td{padding:7px 6px;} }
 </style>
@@ -105,7 +107,10 @@
      指令卡 v8 仅作规则口径解释、台账仅作历史留档，均不作为数据来源。
   4. 用户回执文件：C:\Users\Admin\Downloads\投资回执_*.md（由本页「下载回执文件」按钮生成），
      定时任务读取后按指令卡 §十一「3 步动作」处理，并回写 receipts / pending_receipts。
-  5. 本页仅为纪律执行辅助，不构成投资建议；下单由用户本人确认。
+  5. 在线版（GitHub Pages，手机 / 异地可访问）：https://reddict.github.io/invest-workbench/
+     线上是本地文件的副本 —— 本地回写后双击 C:\Users\Admin\Downloads\投资工作台_发布\推送更新.bat 即同步；
+     Token 过期或吊销后，双击同目录「重置令牌.bat」重设。
+  6. 本页仅为纪律执行辅助，不构成投资建议；下单由用户本人确认。
   ============================================================
 -->
 
@@ -234,15 +239,16 @@
   "meta": {
     "title": "投资工作台 · 五层资金结构",
     "data_date": "2026-09-14",
-    "updated_at": "2026-09-14 15:38",
+    "updated_at": "2026-09-14 18:22",
     "updated_by": "Marvis",
-    "version": "v2.1",
+    "version": "v2.2",
+    "online_url": "https://reddict.github.io/invest-workbench/",
     "rules_ref": "AI盯盘指令卡_v8_可直接执行版.md（仅作规则口径解释）",
     "notice": "本页 JSON 为全部投资任务的唯一数据源。行情已更新至 2026-09-14 收盘（日终汇总）；Downloads 下无「投资回执_*.md」待处理文件（已处理回执目录已建）；宝钢股份盘中 5.79 触及 D 层首笔触发价 5.80，仍待回执；A层/B层成本仍为暂估值，待回执修正。"
   },
   "source_of_truth": {
     "enabled": true,
-    "rule": "工作台 JSON（script id=workbench-data）是盯盘、提醒、回执、汇总等全部任务的唯一数据源：任务执行前必须先读本页，执行后必须回写本页；台账仅作历史留档，指令卡 v8 仅作规则口径解释。"
+    "rule": "工作台 JSON（script id=workbench-data）是盯盘、提醒、回执、汇总等全部任务的唯一数据源：任务执行前必须先读本页，执行后必须回写本页并同步线上。用户在任何渠道（对话／网页／手机）反馈的买卖成交，一律即时入账、回写本页并推送线上，后续所有任务只以最新持仓、成本与余额为准；台账仅作历史留档，指令卡 v8 仅作规则口径解释。"
   },
   "schedule": [
     {
@@ -269,7 +275,7 @@
     {
       "time": "15:35",
       "name": "日终汇总与回执处理",
-      "action": "处理用户回执 + 全量回写工作台",
+      "action": "处理用户回执 + 全量回写工作台 + 推送线上",
       "writes": "全部区块",
       "status": "运行中"
     }
@@ -619,6 +625,12 @@
       "text": "① A层触顶3万后偏好（卖出再平衡 / 暂停净买入）② D层券商可买品种 ③ 科创50ETF 具体品种",
       "status": "待处理",
       "cls": "b-gray"
+    },
+    {
+      "group": "发布同步",
+      "text": "旧 Token 已吊销：拿到新 Token 后双击 C:\\Users\\Admin\\Downloads\\投资工作台_发布\\重置令牌.bat 写入一次即可；此后日终汇总会自动推送线上，也可随时双击「推送更新.bat」手动同步",
+      "status": "待你操作",
+      "cls": "b-red"
     }
   ],
   "params": [
@@ -699,9 +711,15 @@
       "ver": "v6",
       "role": "历史版本",
       "mtime": "2026-09-09 11:43"
+    },
+    {
+      "name": "投资工作台_在线版（GitHub Pages）",
+      "ver": "v2.2",
+      "role": "永久在线网址 https://reddict.github.io/invest-workbench/（线上为副本，本地回写后双击「推送更新.bat」同步）",
+      "mtime": "2026-09-14 18:12"
     }
   ],
-  "files_note": "规则源只认 v8 指令卡；状态源只认台账。历史版本仅作留档，请勿再据此执行。"
+  "files_note": "规则源只认 v8 指令卡；状态源只认本页 JSON，台账/总纲仅作历史留档。历史版本请勿再据此执行。末尾的在线版为本地文件的副本，本地回写后必须推送同步。"
 }
 </script>
 
@@ -718,7 +736,8 @@
   /* 头部 */
   var m=DATA.meta, c=DATA.capital;
   set('headMeta','<b>唯一数据源</b> ｜ 数据日期 <b>'+esc(m.data_date)+'</b> ｜ 最近回写 '+esc(m.updated_at)+'（'+esc(m.updated_by)+'）'
-    +' ｜ 规则口径：'+esc(m.rules_ref)+'<br>'+esc(m.notice));
+    +' ｜ 规则口径：'+esc(m.rules_ref)+'<br>'+esc(m.notice)
+    + (m.online_url ? '<div class="online">在线版（手机 / 异地可看）：<a href="'+esc(m.online_url)+'" target="_blank" rel="noopener">'+esc(m.online_url)+'</a> ｜ 本地回写后双击「推送更新.bat」同步</div>' : ''));
   set('headKpis',
     '<div class="kpi"><div class="k">总资金</div><div class="v">'+money(c.total)+' 元</div></div>'+
     '<div class="kpi"><div class="k">已投入</div><div class="v">'+money(c.invested)+' 元</div></div>'+
