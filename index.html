@@ -92,7 +92,34 @@
   .online{margin-top:7px}
   .online a{color:#7db4ff}
   .toast.on{opacity:1;}
-  @media (max-width:700px){ table{font-size:12px;} th,td{padding:7px 6px;} }
+  /* 待办与待拍板 · 直连设置 + 页面内拍板（增量） */
+  details.direct{border:1px dashed #d6dbe5; border-radius:8px; padding:10px 14px; margin-bottom:12px; background:#fcfdff;}
+  details.direct > summary{cursor:pointer; font-size:13px; font-weight:600; color:#3d4759; list-style:none;}
+  details.direct > summary::-webkit-details-marker{display:none;}
+  details.direct > summary::before{content:"▸ "; color:var(--accent);}
+  details.direct[open] > summary::before{content:"▾ ";}
+  .direct .row{display:flex; gap:8px; flex-wrap:wrap; align-items:center; margin-top:10px;}
+  .direct .row input[type=password]{flex:1 1 200px; min-width:0;}
+  .direct .state{font-size:12.5px; color:var(--sub); margin-top:8px;}
+  .direct .state b{color:var(--down); font-weight:600;}
+  .pk{display:flex; gap:6px; flex-wrap:wrap; align-items:center;}
+  .pk button{padding:5px 11px; font-size:12px; border-radius:6px; min-height:30px; white-space:nowrap;}
+  .pk button.p-ok{border-color:var(--down); background:var(--down);}
+  .pk button.p-no{border-color:var(--up); background:var(--up);}
+  .pk button.p-hold{border-color:var(--gray); background:var(--gray);}
+  .pk .pk-note{padding:5px 8px; font-size:12px; flex:1 1 120px; min-width:0;}
+  .pk .fb{flex:1 1 100%; font-size:12.5px; color:var(--sub); line-height:1.5;}
+  .pk .fb.ok{color:var(--down);}
+  .pk .fb.err{color:var(--up);}
+  .pk .fb a{color:var(--accent);}
+  .pk .fb button.ghost{padding:4px 10px; font-size:12px; min-height:28px; margin-left:6px;}
+  @media (max-width:700px){
+    table{font-size:12px;} th,td{padding:7px 6px;}
+    .pk button{padding:7px 12px; font-size:12.5px; min-height:34px;}
+    .pk .pk-note{flex:1 1 100%;}
+    details.direct .row input[type=password]{flex:1 1 100%;}
+    details.direct .row button{flex:1 1 45%;}
+  }
 </style>
 </head>
 <body>
@@ -213,8 +240,23 @@
   </section>
 
   <section class="card">
-    <h2>待办与待拍板 <span class="tag">回复我即可逐条拍板</span></h2>
-    <div class="body" id="todos"></div>
+    <h2>待办与待拍板 <span class="tag">页面内可直接拍板 · 或回复我逐条处理</span></h2>
+    <div class="body">
+      <details class="direct" id="directBox">
+        <summary>直连设置（页面内拍板 · 提交到 GitHub 反馈通道）</summary>
+        <div class="row">
+          <input type="password" id="patInput" placeholder="粘贴 GitHub 令牌（Personal Access Token，需 repo 权限）" autocomplete="off" spellcheck="false">
+          <button id="btnPatSave">保存</button>
+          <button class="ghost" id="btnPatClear">清除</button>
+        </div>
+        <div class="state" id="patState">未配置 —— 点「同意 / 否决 / 待议」将跳转 GitHub 新建 issue 页面（需登录后手动提交）。</div>
+        <div class="footnote">
+          令牌仅保存在本机浏览器 localStorage（键名 <code>iw_gh_pat</code>），<b>不会写入本页面文件、也不会上传</b>；换设备或清理浏览器数据后需重新填写。
+          未配置令牌时自动回退为「打开 GitHub 预填页」，功能不受影响。
+        </div>
+      </details>
+      <div id="todos"></div>
+    </div>
   </section>
 
   <section class="card">
@@ -822,9 +864,21 @@
       DATA.receipts.map(function(r){return '<tr><td class="num">'+esc(r.date)+'</td><td>'+esc(r.name)+'</td><td>'+esc(r.op)+'</td><td>'+esc(r.price)+'</td><td>'+esc(r.result)+'</td></tr>';}).join('')+
       '</tbody></table>' : '<div class="muted">暂无记录。</div>'));
 
-  /* 待办 */
-  set('todos','<table><thead><tr><th style="width:90px">分类</th><th>事项</th><th style="width:100px">状态</th></tr></thead><tbody>'+
-    DATA.todos.map(function(t){return '<tr><td>'+esc(t.group)+'</td><td>'+esc(t.text)+'</td><td><span class="badge '+t.cls+'">'+esc(t.status)+'</span></td></tr>';}).join('')+
+  /* 待办（「待拍板」类条目渲染 同意/否决/待议 + 选填备注） */
+  set('todos','<table><thead><tr><th style="width:90px">分类</th><th>事项</th><th style="width:100px">状态</th><th style="width:210px">操作</th></tr></thead><tbody>'+
+    DATA.todos.map(function(t,i){
+      var isPk = String(t.group||'').indexOf('拍板')!==-1;
+      var cell = isPk
+        ? ('<div class="pk" data-idx="'+i+'">'
+            +'<button class="p-ok" data-pk="同意" data-idx="'+i+'">同意</button>'
+            +'<button class="p-no" data-pk="否决" data-idx="'+i+'">否决</button>'
+            +'<button class="p-hold" data-pk="待议" data-idx="'+i+'">待议</button>'
+            +'<input class="pk-note" data-idx="'+i+'" placeholder="备注（选填）" autocomplete="off">'
+            +'<div class="fb" data-out="'+i+'"></div>'
+          +'</div>')
+        : '<span class="muted">—</span>';
+      return '<tr><td>'+esc(t.group)+'</td><td>'+esc(t.text)+'</td><td><span class="badge '+t.cls+'">'+esc(t.status)+'</span></td><td>'+cell+'</td></tr>';
+    }).join('')+
     '</tbody></table>');
 
   /* 参数 */
@@ -917,22 +971,22 @@
   var GH_ISSUE_NEW='https://github.com/Reddict/invest-workbench/issues/new';
   var TYPE_LABEL={buy:'已买入',sell:'已卖出',none:'未操作',makeup_buy:'逾期补录·买入',makeup_sell:'逾期补录·卖出',decide:'拍板/参数调整意见'};
 
-  document.getElementById('btnGithub').onclick=function(){
-    if(!current){current=build();document.getElementById('fbOut').textContent=current.head+'\n\n—— 「投资工作台」生成于 '+current.stamp+' ——';}
+  /* issue 标题 / 正文的唯一模板：表单提交与页面内拍板共用，保证电脑端任务识别口径完全一致 */
+  function issuePayload(o){
     var meta=DATA.meta||{};
-    var label=TYPE_LABEL[current.type]||current.type;
-    var title='[工作台反馈] '+label+' · '+(current.target||'未填写标的')+' · '+current.stamp;
+    var label=TYPE_LABEL[o.type]||o.type;
+    var title='[工作台反馈] '+label+' · '+(o.target||'未填写标的')+' · '+o.stamp;
     var lines=[
       '### 工作台反馈（由投资工作台页面提交）','',
-      '- **反馈类型**：'+label+'（`'+current.type+'`）',
-      '- **时间戳**：'+current.stamp,
-      '- **标的**：'+(current.target||'—'),
-      '- **数量 / 金额**：'+(current.qty||'—'),
-      '- **成交价**：'+(current.price||'—'),
-      '- **备注**：'+(current.note||'—'),
+      '- **反馈类型**：'+label+'（`'+o.type+'`）',
+      '- **时间戳**：'+o.stamp,
+      '- **标的**：'+(o.target||'—'),
+      '- **数量 / 金额**：'+(o.qty||'—'),
+      '- **成交价**：'+(o.price||'—'),
+      '- **备注**：'+(o.note||'—'),
       '- **工作台版本**：'+(meta.version||'—')+' ｜ 数据日期 '+(meta.data_date||'—'),
       '',
-      '### 回执口令正文','','```',current.head,'```','',
+      '### 回执口令正文','','```',o.head,'```','',
       '### 处理要求','',
       'Agent 读取本 issue 后按《AI盯盘指令卡_v8_可直接执行版.md》§十一「3 步动作」执行：',
       '1. 写入台账「四、回执记录」，并关闭「三、待回执」对应条目；',
@@ -940,11 +994,139 @@
       '3. 同步定时任务口径，回写投资工作台 JSON（positions / watchlist / pending_receipts / receipts）并推送线上页面。','',
       '<!-- 由投资工作台 v'+(meta.version||'')+' 生成，提交后由电脑端定时任务自动读取处理 -->'
     ].join('\n');
-    var url=GH_ISSUE_NEW+'?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(lines);
+    return {title:title, body:lines, label:label};
+  }
+
+  function openIssuePage(p){
+    var url=GH_ISSUE_NEW+'?title='+encodeURIComponent(p.title)+'&body='+encodeURIComponent(p.body);
     var w=window.open(url,'_blank','noopener');
     if(!w){location.href=url;}
+  }
+
+  document.getElementById('btnGithub').onclick=function(){
+    if(!current){current=build();document.getElementById('fbOut').textContent=current.head+'\n\n—— 「投资工作台」生成于 '+current.stamp+' ——';}
+    openIssuePage(issuePayload(current));
     toast('已打开 GitHub 新建 issue（需登录后提交）');
   };
+
+  /* ===== 增量：直连设置 + 页面内拍板（同意 / 否决 / 待议） ===== */
+  var GH_API_ISSUES='https://api.github.com/repos/Reddict/invest-workbench/issues';
+  var PAT_KEY='iw_gh_pat';
+  var memPat='';   /* 浏览器禁用 localStorage 时的内存兜底，绝不写入页面源码 */
+
+  function getPat(){
+    try{var v=localStorage.getItem(PAT_KEY); if(v){return v;}}catch(e){}
+    return memPat;
+  }
+  function storePat(v){
+    memPat=v||'';
+    var ok=true;
+    try{
+      if(v){localStorage.setItem(PAT_KEY,v);}else{localStorage.removeItem(PAT_KEY);}
+    }catch(e){ok=false;}
+    return ok;
+  }
+  function renderPatState(){
+    var el=document.getElementById('patState'); if(!el){return;}
+    if(getPat()){
+      el.innerHTML='<b>直连已启用</b>：点「同意 / 否决 / 待议」将直接提交，无需跳转、无需登录。';
+    }else{
+      el.innerHTML='未配置 —— 点「同意 / 否决 / 待议」将跳转 GitHub 新建 issue 页面（需登录后手动提交）。';
+    }
+  }
+  document.getElementById('btnPatSave').onclick=function(){
+    var v=(document.getElementById('patInput').value||'').trim();
+    if(!v){toast('请先粘贴令牌');return;}
+    var ok=storePat(v);
+    document.getElementById('patInput').value='';
+    renderPatState();
+    toast(ok?'直连已启用':'已存入本页内存（浏览器禁用 localStorage，刷新后需重填）');
+  };
+  document.getElementById('btnPatClear').onclick=function(){
+    storePat('');
+    document.getElementById('patInput').value='';
+    renderPatState();
+    toast('已清除本机令牌');
+  };
+  renderPatState();
+
+  function stampNow(){
+    var n=new Date();function p2(x){return (x<10?'0':'')+x;}
+    return n.getFullYear()+'-'+p2(n.getMonth()+1)+'-'+p2(n.getDate())+' '+p2(n.getHours())+':'+p2(n.getMinutes())+':'+p2(n.getSeconds());
+  }
+  function todoLabel(t){
+    var s=String((t&&t.text)||'').replace(/[，,；;]\s*均未拍板[^。]*$/,'').replace(/均未拍板.*$/,'').trim();
+    if(s.length>44){s=s.slice(0,44)+'…';}
+    return s||'待拍板事项';
+  }
+  function errText(status,msg){
+    if(status===401){return '令牌无效或已过期（401），请展开「直连设置」重新填写令牌';}
+    if(status===403){return '权限不足或触发限流（403）—— 请确认令牌具备 repo 权限，稍后重试';}
+    if(status===404){return '仓库或接口不可访问（404）—— 请确认 Reddict/invest-workbench 存在且令牌可写';}
+    if(status===422){return '提交内容被拒绝（422）：'+(msg||'参数不合法');}
+    return (msg||'网络或接口异常')+(status?('（HTTP '+status+'）'):'');
+  }
+  function sendDecision(t,verdict,note,out,box){
+    var target=todoLabel(t);
+    var stamp=stampNow();
+    var head='拍板：'+verdict+' · '+target;
+    var payload=issuePayload({head:head,stamp:stamp,raw:head,note:note,target:target,type:'decide',qty:'',price:''});
+    box.__payload=payload;
+    if(!getPat()){
+      out.className='fb';
+      out.innerHTML='未配置直连令牌，已在新窗口打开 GitHub 预填页，登录后点「Submit new issue」即可。'
+        +'<button class="ghost" data-pk-retry="1">重新打开 GitHub 提交页</button>';
+      openIssuePage(payload);
+      toast('未配置令牌：已打开 GitHub 预填页');
+      return;
+    }
+    out.className='fb';
+    out.textContent='提交中…';
+    fetch(GH_API_ISSUES,{
+      method:'POST',
+      headers:{'Authorization':'Bearer '+getPat(),'Accept':'application/vnd.github+json','Content-Type':'application/json'},
+      body:JSON.stringify({title:payload.title,body:payload.body})
+    }).then(function(r){
+      return r.text().then(function(txt){
+        var j={};try{j=JSON.parse(txt);}catch(e){}
+        if(r.ok){return j;}
+        var e=new Error(errText(r.status,j&&j.message));e.status=r.status;throw e;
+      });
+    }).then(function(j){
+      out.className='fb ok';
+      out.innerHTML='已提交，电脑端将定期处理'+(j&&j.number?('（issue #'+j.number+'）'):'')+'。'
+        +((j&&j.html_url)?(' <a href="'+esc(j.html_url)+'" target="_blank" rel="noopener">查看反馈记录</a>'):'');
+      toast('拍板已提交：'+verdict);
+    })['catch'](function(e){
+      out.className='fb err';
+      out.innerHTML='提交失败：'+esc((e&&e.message)||'网络或接口异常')+'。'
+        +'<button class="ghost" data-pk-retry="1">改用网页提交（GitHub 登录后提交）</button>';
+      toast('提交失败：'+verdict);
+    });
+  }
+
+  var todosHost=document.getElementById('todos');
+  if(todosHost){
+    todosHost.addEventListener('click',function(ev){
+      var el=ev.target;
+      if(!el||!el.closest){return;}
+      var btn=el.closest('button[data-pk]');
+      if(btn){
+        var t=DATA.todos[parseInt(btn.getAttribute('data-idx'),10)];
+        if(!t){return;}
+        var box=btn.parentNode;
+        var noteEl=box.querySelector('.pk-note');
+        var out=box.querySelector('.fb')||box;
+        sendDecision(t,btn.getAttribute('data-pk'),noteEl?(noteEl.value||'').trim():'',out,box);
+        return;
+      }
+      var rb=el.closest('button[data-pk-retry]');
+      if(rb){
+        var host=rb.closest('.pk');
+        if(host&&host.__payload){openIssuePage(host.__payload);toast('已打开 GitHub 预填页');}
+      }
+    });
+  }
 
   document.getElementById('btnClear').onclick=function(){
     document.getElementById('fbQty').value='';
