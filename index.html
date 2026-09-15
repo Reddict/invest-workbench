@@ -197,6 +197,7 @@
         <button id="btnGen">生成回执</button>
         <button class="ghost" id="btnCopy">复制口令</button>
         <button class="ghost" id="btnDownload">下载回执文件</button>
+        <button class="ghost" id="btnGithub">提交到 GitHub 反馈通道</button>
         <button class="ghost" id="btnClear">清空</button>
       </div>
       <div class="output">
@@ -205,6 +206,7 @@
       <p class="hint">
         · <b>复制口令</b>：直接粘贴到与 Marvis 的对话里即可，我会按指令卡 §十一「3 步动作」更新台账、持仓与买卖线。<br>
         · <b>下载回执文件</b>：保存为 <code>投资回执_日期_时间.md</code>（默认落在 Downloads），日终汇总任务会自动读取并处理，无需再发消息。<br>
+        · <b>提交到 GitHub 反馈通道</b>：新建 issue 页面会预填「反馈类型 + 时间戳 + 回执口令正文」，手机端登录 GitHub 后点「Submit new issue」即可提交；电脑端定时任务会读取该 issue 并自动入账、回写本页、推送线上（需联网）。<br>
         · 支持口语化，例如「宝钢 2000 块 5.78 买了」我也能识别。
       </p>
     </div>
@@ -909,6 +911,39 @@
     document.body.appendChild(a);a.click();document.body.removeChild(a);
     setTimeout(function(){URL.revokeObjectURL(a.href);},2000);
     toast('已下载：'+fname);
+  };
+
+  /* 提交到 GitHub 反馈通道：URL 参数预填 issue */
+  var GH_ISSUE_NEW='https://github.com/Reddict/invest-workbench/issues/new';
+  var TYPE_LABEL={buy:'已买入',sell:'已卖出',none:'未操作',makeup_buy:'逾期补录·买入',makeup_sell:'逾期补录·卖出',decide:'拍板/参数调整意见'};
+
+  document.getElementById('btnGithub').onclick=function(){
+    if(!current){current=build();document.getElementById('fbOut').textContent=current.head+'\n\n—— 「投资工作台」生成于 '+current.stamp+' ——';}
+    var meta=DATA.meta||{};
+    var label=TYPE_LABEL[current.type]||current.type;
+    var title='[工作台反馈] '+label+' · '+(current.target||'未填写标的')+' · '+current.stamp;
+    var lines=[
+      '### 工作台反馈（由投资工作台页面提交）','',
+      '- **反馈类型**：'+label+'（`'+current.type+'`）',
+      '- **时间戳**：'+current.stamp,
+      '- **标的**：'+(current.target||'—'),
+      '- **数量 / 金额**：'+(current.qty||'—'),
+      '- **成交价**：'+(current.price||'—'),
+      '- **备注**：'+(current.note||'—'),
+      '- **工作台版本**：'+(meta.version||'—')+' ｜ 数据日期 '+(meta.data_date||'—'),
+      '',
+      '### 回执口令正文','','```',current.head,'```','',
+      '### 处理要求','',
+      'Agent 读取本 issue 后按《AI盯盘指令卡_v8_可直接执行版.md》§十一「3 步动作」执行：',
+      '1. 写入台账「四、回执记录」，并关闭「三、待回执」对应条目；',
+      '2. 更新指令卡 §三 持仓档案与买卖线（卖出线 = 新成本 ×1.08 / ×1.15）；',
+      '3. 同步定时任务口径，回写投资工作台 JSON（positions / watchlist / pending_receipts / receipts）并推送线上页面。','',
+      '<!-- 由投资工作台 v'+(meta.version||'')+' 生成，提交后由电脑端定时任务自动读取处理 -->'
+    ].join('\n');
+    var url=GH_ISSUE_NEW+'?title='+encodeURIComponent(title)+'&body='+encodeURIComponent(lines);
+    var w=window.open(url,'_blank','noopener');
+    if(!w){location.href=url;}
+    toast('已打开 GitHub 新建 issue（需登录后提交）');
   };
 
   document.getElementById('btnClear').onclick=function(){
