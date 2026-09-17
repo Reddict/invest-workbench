@@ -283,7 +283,7 @@
   "meta": {
     "title": "投资工作台 · 五层资金结构",
     "data_date": "2026-09-17",
-    "updated_at": "2026-09-17 14:50",
+    "updated_at": "2026-09-17 15:05",
     "updated_by": "Marvis",
     "version": "v2.2",
     "online_url": "https://reddict.github.io/invest-workbench/",
@@ -663,7 +663,7 @@
   "todos": [
     {
       "group": "通道故障",
-      "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态 —— GET /repos/... 返回 has_issues=false、open_issues_count=0，带令牌 state=open / state=all 与公开接口读取均为 0 条，POST /issues 探测返回 410「Issues has been disabled in this repository」（2026-09-17 14:06 复核：REST /repos 返回 has_issues=false、POST /issues 探测返回 410；历轮另以 GraphQL hasIssuesEnabled=false 佐证；REST POST 若缺 title 或里程碑非法会先返回 422，属校验先于功能开关，不改变结论），据此确认通道被关闭而非令牌缺权限。自 2026-09-15 17:13 起连续 29 次独立复核结论完全一致（首轮 2026-09-15 17:13；最近 6 轮 2026-09-17 07:06 / 08:07 / 10:07 / 11:06 / 13:06 / 14:06，更早轮次时间已归档），历轮均无反馈可收取、无入账。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮均无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；令牌本身有效（GET /user 200、账号 Reddict 具仓库 admin 权限），无需重设令牌",
+      "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态 —— GET /repos/... 返回 has_issues=false、open_issues_count=0，带令牌 state=open / state=all 与公开接口读取均为 0 条，POST /issues 探测返回 410「Issues has been disabled in this repository」（2026-09-17 15:05 复核：REST /repos 返回 has_issues=false、POST /issues 探测返回 410；历轮另以 GraphQL hasIssuesEnabled=false 佐证；REST POST 若缺 title 或里程碑非法会先返回 422，属校验先于功能开关，不改变结论），据此确认通道被关闭而非令牌缺权限。自 2026-09-15 17:13 起连续 30 次独立复核结论完全一致（首轮 2026-09-15 17:13；最近 6 轮 2026-09-17 08:07 / 10:07 / 11:06 / 13:06 / 14:06 / 15:05，更早轮次时间已归档），历轮均无反馈可收取、无入账。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮均无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；令牌本身有效（GET /user 200、账号 Reddict 具仓库 admin 权限），无需重设令牌",
       "status": "待你操作",
       "cls": "b-red"
     },
