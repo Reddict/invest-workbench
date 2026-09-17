@@ -283,12 +283,12 @@
   "meta": {
     "title": "投资工作台 · 五层资金结构",
     "data_date": "2026-09-17",
-    "updated_at": "2026-09-17 10:07",
+    "updated_at": "2026-09-17 11:06",
     "updated_by": "Marvis",
     "version": "v2.2",
     "online_url": "https://reddict.github.io/invest-workbench/",
     "rules_ref": "AI盯盘指令卡_v8_可直接执行版.md（仅作规则口径解释）",
-    "notice": "本页 JSON 为全部投资任务的唯一数据源。【2026-09-16 15:35 日终汇总 · 收盘口径】当日 A 股正常交易。收盘：上证 3891.60（+0.71%）／沪深300 4480.27（+0.68%）／创业板指 3311.47（+1.96%），三指均值 +1.12% → 情绪【回暖】，操作开关正常执行。持仓按收盘价重算：长江电力 28.46（+12.44%）、创业板50ETF 1.550（+18.41%）、沪深300ETF 4.550（+0.24%），市值合计 10862 元、浮动盈亏约 +737 元。当日无成交回执（Downloads 下无「投资回执_*.md」）；触发判定：无新增买卖档命中；宝钢股份 5.77 ≤ 5.80 全天运行于首笔触发价下方（当日最低 5.67），D 层首笔买入档持续命中且仍待回执（已提醒 3 次）；其余标的一律未命中：长江电力（买需再跌 1.44%）、创业板50ETF（13.4%）、沪深300ETF（买距 3.23% / 卖距 2.75%）、芯片ETF（16.8%）、中国神华（6.58%）、工商银行（7.52%）；科创50ETF 工作台 price=null 且标记「待回填」→ 按纪律跳过，不判定触发（仅记录科创50 指数收 1616.19、+4.14%）。A层/B层成本仍为暂估值，待回执修正。【2026-09-17 10:07 反馈通道复核 · 第 26 次】Reddict/invest-workbench 的 Issues 仍处于关闭状态：REST GET /repos/... 返回 has_issues=false、open_issues_count=0，GraphQL 返回 hasIssuesEnabled=false，带令牌 state=open / closed / all 与公开接口读取均为 0 条（含已关闭 issue 亦为 0 条）；→ 通道失效，本轮无反馈可收取、无任何入账（capital / layers / positions / receipts / pending_receipts 均保持不变）。令牌有效（GET /user 200、账号 Reddict 具仓库 admin 权限），无需重设令牌；请在仓库 Settings → General → Features 重新勾选 Issues，通道即恢复。（自 2026-09-15 17:13 起共 26 次复核结论一致，逐次时间留档已并入 todos「通道故障」条，避免本字段无限增长。）"
+    "notice": "本页 JSON 为全部投资任务的唯一数据源。【2026-09-16 15:35 日终汇总 · 收盘口径】当日 A 股正常交易。收盘：上证 3891.60（+0.71%）／沪深300 4480.27（+0.68%）／创业板指 3311.47（+1.96%），三指均值 +1.12% → 情绪【回暖】，操作开关正常执行。持仓按收盘价重算：长江电力 28.46（+12.44%）、创业板50ETF 1.550（+18.41%）、沪深300ETF 4.550（+0.24%），市值合计 10862 元、浮动盈亏约 +737 元。当日无成交回执（Downloads 下无「投资回执_*.md」）；触发判定：无新增买卖档命中；宝钢股份 5.77 ≤ 5.80 全天运行于首笔触发价下方（当日最低 5.67），D 层首笔买入档持续命中且仍待回执（已提醒 3 次）；其余标的一律未命中：长江电力（买需再跌 1.44%）、创业板50ETF（13.4%）、沪深300ETF（买距 3.23% / 卖距 2.75%）、芯片ETF（16.8%）、中国神华（6.58%）、工商银行（7.52%）；科创50ETF 工作台 price=null 且标记「待回填」→ 按纪律跳过，不判定触发（仅记录科创50 指数收 1616.19、+4.14%）。A层/B层成本仍为暂估值，待回执修正。【2026-09-17 11:06 反馈通道复核 · 第 27 次】Reddict/invest-workbench 的 Issues 仍处于关闭状态：REST GET /repos/... 返回 has_issues=false、open_issues_count=0，GraphQL 返回 hasIssuesEnabled=false，带令牌 state=open / closed / all 与公开接口读取均为 0 条（含已关闭 issue 亦为 0 条）；→ 通道失效，本轮无反馈可收取、无任何入账（capital / layers / positions / receipts / pending_receipts 均保持不变）。令牌有效（GET /user 200、账号 Reddict 具仓库 admin 权限），无需重设令牌；请在仓库 Settings → General → Features 重新勾选 Issues，通道即恢复。（自 2026-09-15 17:13 起共 27 次复核结论一致，逐次时间留档已并入 todos「通道故障」条，避免本字段无限增长。）"
   },
   "source_of_truth": {
     "enabled": true,
@@ -656,7 +656,7 @@
   "todos": [
     {
       "group": "通道故障",
-      "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态 —— GET /repos/... 返回 has_issues=false、open_issues_count=0，带令牌 state=open / state=all 与公开接口读取均为 0 条，POST /issues 探测返回 410「Issues has been disabled in this repository」（2026-09-17 10:07 复核另以 GraphQL hasIssuesEnabled=false 佐证；REST POST 现先做请求体校验，缺 title 或里程碑非法时返回 422，属校验先于功能开关，不改变结论），据此确认通道被关闭而非令牌缺权限。自 2026-09-15 17:13 起连续 26 次独立复核结论完全一致（首轮 2026-09-15 17:13；最近 6 轮 2026-09-17 03:05 / 05:06 / 06:06 / 07:06 / 08:07 / 10:07，更早轮次时间已归档），历轮均无反馈可收取、无入账。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮均无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；令牌本身有效（GET /user 200、账号 Reddict 具仓库 admin 权限），无需重设令牌",
+      "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态 —— GET /repos/... 返回 has_issues=false、open_issues_count=0，带令牌 state=open / state=all 与公开接口读取均为 0 条，POST /issues 探测返回 410「Issues has been disabled in this repository」（2026-09-17 11:06 复核另以 GraphQL hasIssuesEnabled=false 佐证；REST POST 现先做请求体校验，缺 title 或里程碑非法时返回 422，属校验先于功能开关，不改变结论），据此确认通道被关闭而非令牌缺权限。自 2026-09-15 17:13 起连续 27 次独立复核结论完全一致（首轮 2026-09-15 17:13；最近 6 轮 2026-09-17 05:06 / 06:06 / 07:06 / 08:07 / 10:07 / 11:06，更早轮次时间已归档），历轮均无反馈可收取、无入账。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮均无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；令牌本身有效（GET /user 200、账号 Reddict 具仓库 admin 权限），无需重设令牌",
       "status": "待你操作",
       "cls": "b-red"
     },
