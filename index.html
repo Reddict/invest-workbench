@@ -680,7 +680,7 @@
  "todos": [
   {
    "group": "通道故障",
-   "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态。2026-09-18 12:07 轮复核：GET /repos/... 返回 has_issues=false、open_issues_count=0；带令牌 state=open / state=all 与公开接口（无令牌）读取均为 0 条；令牌有效（GET /user 返回 200，账号 Reddict 对仓库具 admin/push 权限）。历史轮次曾以 POST /issues 探测返回 410「Issues has been disabled in this repository」、GraphQL hasIssuesEnabled=false 佐证，本轮为避免在用户仓库产生写入，亦未再发 POST 探测。据此确认通道被关闭而非令牌缺权限。自 2026-09-15 17:13 起连续 48 次独立复核结论完全一致（首轮 2026-09-15 17:13；最近 7 轮 2026-09-18 05:06 / 06:07 / 07:05 / 08:05 / 09:40 / 11:07 / 12:07，更早轮次时间已归档），历轮均无反馈可收取、无入账。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮均无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；令牌本身有效（GET /user 200、账号 Reddict 具仓库 admin 权限），无需重设令牌",
+   "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态。2026-09-18 13:06 轮复核：GET /repos/... 返回 has_issues=false、open_issues_count=0；带令牌 state=open / state=all 与公开接口（无令牌）读取均为 0 条；令牌有效（GET /user 返回 200，账号 Reddict 对仓库具 admin/push 权限）。历史轮次曾以 POST /issues 探测返回 410「Issues has been disabled in this repository」、GraphQL hasIssuesEnabled=false 佐证，本轮为避免在用户仓库产生写入，亦未再发 POST 探测。据此确认通道被关闭而非令牌缺权限。自 2026-09-15 17:13 起连续 49 次独立复核结论完全一致（首轮 2026-09-15 17:13；最近 7 轮 2026-09-18 06:07 / 07:05 / 08:05 / 09:40 / 11:07 / 12:07 / 13:06，更早轮次时间已归档），历轮均无反馈可收取、无入账。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮均无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；令牌本身有效（GET /user 200、账号 Reddict 具仓库 admin 权限），无需重设令牌",
    "status": "待你操作",
    "cls": "b-red"
   },
