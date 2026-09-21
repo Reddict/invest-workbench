@@ -283,12 +283,12 @@
   "meta": {
     "title": "投资工作台 · 五层资金结构",
     "data_date": "2026-09-21",
-    "updated_at": "2026-09-21 19:05",
+    "updated_at": "2026-09-21 20:05",
     "updated_by": "Marvis",
     "version": "v2.2",
     "online_url": "https://reddict.github.io/invest-workbench/",
     "rules_ref": "AI盯盘指令卡_v8_可直接执行版.md（仅作规则口径解释）",
-    "notice": "【2026-09-21 19:05 反馈通道收取（第 105 轮）】复核结论与历轮完全一致，通道仍处关闭：GET /repos/Reddict/invest-workbench 返回 has_issues=false、open_issues_count=0；令牌接口（DPAPI token.dat 解密，账号 Reddict）与公开接口（无令牌）读取 state=open / state=all 均为 0 条；本轮未再行 POST 探测（避免通道若已恢复时误建无效 issue）。令牌有效（GET /user 返回 200，账号 Reddict，具仓库 admin/push 权限），故非令牌缺权限所致。本轮 0 条反馈可收取：无 issue 入账、无持仓/成本/层级变更、无回执归档，capital / layers / positions / watchlist / receipts / pending_receipts 均维持原值；meta.data_date 维持 2026-09-21；todos 仅更新「通道故障」条目轮次。通道自 2026-09-15 17:13 起连续 104 轮复核结论完全一致，请在仓库 Settings → General → Features 重新勾选 Issues 恢复通道（详见 todos）。\n【归档压缩】历轮重复记录内容与前文重复或已完整保存于 daily.slotA / daily.slotB / positions.notes / alerts 区块，已从页头 notice 移除，完整历史见仓库提交记录。"
+    "notice": "【2026-09-21 20:05 反馈通道收取（第 106 轮）】复核结论与历轮完全一致，通道仍处关闭：GET /repos/Reddict/invest-workbench 返回 has_issues=false、open_issues_count=0；令牌接口（DPAPI token.dat 解密，账号 Reddict）与公开接口（无令牌）读取 state=open / state=all 均为 0 条；本轮 POST /issues 探测返回 410「Issues has been disabled in this repository」，未产生任何 issue，再次确认通道关闭。令牌有效（GET /user 返回 200，账号 Reddict，具仓库 admin/push 权限），故非令牌缺权限所致。本轮 0 条反馈可收取：无 issue 入账、无持仓/成本/层级变更、无回执归档，capital / layers / positions / watchlist / receipts / pending_receipts 均维持原值；meta.data_date 维持 2026-09-21；todos 仅更新「通道故障」条目轮次。通道自 2026-09-15 17:13 起连续 105 轮复核结论完全一致，请在仓库 Settings → General → Features 重新勾选 Issues 恢复通道（详见 todos）。\n【归档压缩】历轮重复记录内容与前文重复或已完整保存于 daily.slotA / daily.slotB / positions.notes / alerts 区块，已从页头 notice 移除，完整历史见仓库提交记录。"
   },
   "source_of_truth": {
     "enabled": true,
@@ -745,7 +745,7 @@
   "todos": [
     {
       "group": "通道故障",
-      "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态。2026-09-21 19:05 轮（第 105 轮）复核：GET /repos/... 返回 has_issues=false、open_issues_count=0；带令牌与公开接口（无令牌）读取 state=open / state=all 均为 0 条；本轮未再行 POST 探测（避免通道若已恢复时误建无效 issue）。令牌有效（GET /user 返回 200，账号 Reddict，具仓库 admin/push 权限），故非令牌缺权限所致。自 2026-09-15 17:13 起已连续 104 轮独立复核，结论完全一致，均无反馈可收取、无入账。上一轮复核 2026-09-21 18:05，本轮 2026-09-21 19:05。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；令牌本身有效，无需重设令牌。",
+      "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态。2026-09-21 20:05 轮（第 106 轮）复核：GET /repos/... 返回 has_issues=false、open_issues_count=0；带令牌与公开接口（无令牌）读取 state=open / state=all 均为 0 条；POST /issues 探测返回 410「Issues has been disabled in this repository」，未产生任何 issue。令牌有效（GET /user 返回 200，账号 Reddict，具仓库 admin/push 权限），故非令牌缺权限所致。自 2026-09-15 17:13 起已连续 105 轮独立复核，结论完全一致，均无反馈可收取、无入账。上一轮复核 2026-09-21 19:05，本轮 2026-09-21 20:05。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；令牌本身有效，无需重设令牌。",
       "status": "待你操作",
       "cls": "b-red"
     },
