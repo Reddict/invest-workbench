@@ -283,12 +283,12 @@
  "meta": {
   "title": "投资工作台 · 五层资金结构",
   "data_date": "2026-09-22",
-  "updated_at": "2026-09-22 16:06",
+  "updated_at": "2026-09-22 17:06",
   "updated_by": "Marvis",
   "version": "v2.2",
   "online_url": "https://reddict.github.io/invest-workbench/",
   "rules_ref": "AI盯盘指令卡_v8_可直接执行版.md（仅作规则口径解释）",
-  "notice": "【2026-09-22 16:06 反馈通道收取（第 119 轮）】复核结论与历轮完全一致，通道仍处关闭：GET /repos/Reddict/invest-workbench 返回 has_issues=false、open_issues_count=0；带令牌接口（DPAPI token.dat 解密，账号 Reddict）读取 state=open / state=all 均为 0 条，未产生任何 issue；POST /issues 探测返回 410（Issues has been disabled），可排除「令牌缺 Issues 写权限」。令牌有效（GET /user 返回 200，账号 Reddict，具仓库 admin/push 权限），故非令牌缺权限所致，无需重设令牌。本轮 0 条反馈可收取：无 issue 入账、无持仓/成本/层级变更、无回执归档，capital / layers / positions / watchlist / receipts / pending_receipts 均维持原值；meta.data_date 维持原值（2026-09-22，由当日盯盘任务写入）；todos 仅更新「通道故障」条目轮次。通道自 2026-09-15 17:13 起连续 118 轮复核结论完全一致，请在仓库 Settings → General → Features 重新勾选 Issues 恢复通道（详见 todos）。\n【归档压缩】历轮重复记录内容与前文重复或已完整保存于 daily.slotA / daily.slotB / positions.notes / alerts 区块，已从页头 notice 移除，完整历史见仓库提交记录。"
+  "notice": "【2026-09-22 17:06 反馈通道收取（第 120 轮）】复核结论与历轮完全一致，通道仍处关闭：GET /repos/Reddict/invest-workbench 返回 has_issues=false、open_issues_count=0；GraphQL 三重口径 repository.hasIssuesEnabled=false、issues.totalCount=0；带令牌接口（DPAPI token.dat 解密，账号 Reddict）读取 state=open / state=all 均为 0 条，未产生任何 issue；POST /issues 携带合法结构体（title 为空串）返回 410（Issues has been disabled in this repository），可排除「令牌缺 Issues 写权限」（注：POST 空体 / 缺 title 会先被 schema 校验拦为 422，须带 title 字段方能触发功能门返回 410）。令牌有效（GET /user 返回 200，账号 Reddict，具仓库 admin/push 权限），故非令牌缺权限所致，无需重设令牌。本轮 0 条反馈可收取：无 issue 入账、无持仓/成本/层级变更、无回执归档，capital / layers / positions / watchlist / receipts / pending_receipts 均维持原值；meta.data_date 维持原值（2026-09-22，由当日盯盘任务写入）；todos 仅更新「通道故障」条目轮次。通道自 2026-09-15 17:13 起连续 119 轮复核结论完全一致，请在仓库 Settings → General → Features 重新勾选 Issues 恢复通道（详见 todos）。\n【归档压缩】历轮重复记录内容与前文重复或已完整保存于 daily.slotA / daily.slotB / positions.notes / alerts 区块，已从页头 notice 移除，完整历史见仓库提交记录。"
  },
  "source_of_truth": {
   "enabled": true,
@@ -774,7 +774,7 @@
  "todos": [
   {
    "group": "通道故障",
-   "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态。2026-09-22 16:06 轮（第 119 轮）复核：GET /repos/... 返回 has_issues=false、open_issues_count=0；带令牌接口（DPAPI token.dat 解密、账号 Reddict）读取 state=open / state=all 均为 0 条，未产生任何 issue；POST /issues 探测返回 410（Issues has been disabled），可排除令牌缺 Issues 写权限。令牌有效（GET /user 返回 200，账号 Reddict，具仓库 admin/push 权限），故非令牌缺权限所致，无需重设令牌。自 2026-09-15 17:13 起已连续 118 轮独立复核，结论完全一致，均无反馈可收取、无入账。上一轮复核 2026-09-22 15:05，本轮 2026-09-22 16:06。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；令牌本身有效，无需重设令牌。",
+   "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态。2026-09-22 17:06 轮（第 120 轮）复核：GET /repos/... 返回 has_issues=false、open_issues_count=0；GraphQL repository.hasIssuesEnabled=false、issues.totalCount=0；带令牌接口（DPAPI token.dat 解密、账号 Reddict）读取 state=open / state=all 均为 0 条，未产生任何 issue；POST /issues 携带合法结构体（title 为空串）返回 410（Issues has been disabled in this repository），可排除令牌缺 Issues 写权限（POST 空体 / 缺 title 会先被 schema 校验拦为 422，须带 title 才能触发功能门）。令牌有效（GET /user 返回 200，账号 Reddict，具仓库 admin/push 权限），故非令牌缺权限所致，无需重设令牌。自 2026-09-15 17:13 起已连续 119 轮独立复核，结论完全一致，均无反馈可收取、无入账。上一轮复核 2026-09-22 16:06，本轮 2026-09-22 17:06。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；令牌本身有效，无需重设令牌。",
    "status": "待你操作",
    "cls": "b-red"
   },
