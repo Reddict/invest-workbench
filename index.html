@@ -278,11 +278,12 @@
 
 <div class="toast" id="toast"></div>
 
-<script id="workbench-data" type="application/json">{
+<script id="workbench-data" type="application/json">
+{
   "meta": {
     "title": "投资工作台 · 五层资金结构",
     "data_date": "2026-09-23",
-    "updated_at": "2026-09-24 09:07",
+    "updated_at": "2026-09-24 09:38",
     "updated_by": "Marvis",
     "version": "v2.2",
     "online_url": "https://reddict.github.io/invest-workbench/",
@@ -763,6 +764,13 @@
       "name": "宝钢股份",
       "trigger": "收盘 5.75 ≤ 5.80（D层首笔触发价，当日区间 5.71–5.82）",
       "action": "D 层首笔买入档持续命中 · 日终收盘复核（现价可买 300 股约 1725 元）；自 09-14 同档触发仍待回执，本次为第 8 个交易日收盘复核"
+    },
+    {
+      "date": "2026-09-24",
+      "time": "09:38",
+      "name": "宝钢股份",
+      "trigger": "现价 5.75 ≤ 5.80（D层首笔触发价，当日区间 5.72–5.76）",
+      "action": "D 层首笔买入档持续命中 · 盘中扫描提醒（现价可买 300 股约 1725 元）；自 09-14 同档触发仍待回执，本次为盘中扫描首次提醒"
     }
   ],
   "pending_receipts": [
@@ -970,7 +978,8 @@
     }
   ],
   "files_note": "规则源只认 v8 指令卡；状态源只认本页 JSON，台账/总纲仅作历史留档。历史版本请勿再据此执行。末尾的在线版为本地文件的副本，本地回写后必须推送同步。"
-}</script>
+}
+</script>
 
 <script>
 (function(){
