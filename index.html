@@ -2,12 +2,12 @@
  "meta": {
   "title": "投资工作台 · 五层资金结构",
   "data_date": "2026-09-24",
-  "updated_at": "2026-09-27 18:05",
+  "updated_at": "2026-09-27 19:05",
   "updated_by": "Marvis",
   "version": "v2.2",
   "online_url": "https://reddict.github.io/invest-workbench/",
   "rules_ref": "AI盯盘指令卡_v8_可直接执行版.md（仅作规则口径解释）",
-  "notice": "【2026-09-27 18:05 反馈通道收取（第 202 轮）】本轮 token.dat 已成功解密且有效（复用 push.py load_token · DPAPI 解密成功，GET /user 返回 200，账号 Reddict，具 admin/push 权限），以带凭据方式复核：GET /repos/Reddict/invest-workbench 返回 has_issues=false、open_issues_count=0；GET issues?state=open 返回 0 条（另经 state=all 交叉核验亦 0 条、pulls 0 条）；POST /issues 探测返回 410（Issues has been disabled in this repository）——结论与第 163~201 轮完全一致，确认系 Issues 功能关闭而非令牌问题，且本轮证实令牌可用（上一轮 201 记录「令牌不可读」系读取方式问题，非令牌失效）。本轮 0 条反馈可收取：无 issue 入账、无持仓/成本/层级变更、无回执归档、无拍板需求追加；capital / layers / positions / watchlist / receipts / pending_receipts 均维持原值；meta.data_date 维持 2026-09-24；todos 仅更新「通道故障」条目轮次（201→202）。请在仓库 Settings → General → Features 重新勾选 Issues 恢复通道（详见 todos）。如后续需带凭据操作（打标签/关闭 issue），令牌已可正常读取，直接使用即可。"
+  "notice": "【2026-09-27 19:05 反馈通道收取（第 203 轮）】本轮 token.dat 解密成功且令牌有效（复用 push.py load_token · DPAPI 解密成功，GET /user 返回 200，账号 Reddict，具 admin/push 权限），以带凭据方式复核：GET /repos/Reddict/invest-workbench 返回 has_issues=false、open_issues_count=0；GET issues?state=open 返回 0 条（另经 state=all 交叉核验亦 0 条、pulls 0 条）；POST /issues 探测返回 410（Issues has been disabled in this repository）——结论与第 163~202 轮完全一致，确认系 Issues 功能关闭而非令牌问题。本轮 0 条反馈可收取：无 issue 入账、无持仓/成本/层级变更、无回执归档、无拍板需求追加；capital / layers / positions / watchlist / receipts / pending_receipts 均维持原值；meta.data_date 维持 2026-09-24；todos 仅更新「通道故障」条目轮次（202→203）。请在仓库 Settings → General → Features 重新勾选 Issues 恢复通道（详见 todos）。如后续需带凭据操作（打标签/关闭 issue），令牌已可正常读取，直接使用即可。"
  },
  "source_of_truth": {
   "enabled": true,
@@ -581,7 +581,7 @@
  "todos": [
   {
    "group": "通道故障",
-   "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态。2026-09-27 18:05 轮（第 202 轮）复核：token.dat 已成功解密且有效（GET /user 200，账号 Reddict，admin/push），以带凭据方式核验：GET /repos/... 返回 has_issues=false、open_issues_count=0；GET issues?state=open 返回 0 条（另经 state=all 交叉核验亦 0 条、pulls 0 条）；POST /issues 探测返回 410（Issues has been disabled）——与第 163~201 轮结论完全一致，确认系功能关闭而非令牌问题（202 轮证实令牌可用，201 轮「令牌不可读」系读取方式问题）。自 2026-09-15 17:13 起已连续 202 轮独立复核，结论完全一致，均无反馈可收取、无入账。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；如后续需带凭据操作（打标签/关闭 issue），可双击「重置令牌.bat」重写 token.dat。",
+   "text": "GitHub 反馈通道失效（非令牌问题）：仓库 Reddict/invest-workbench 的 Issues 功能处于关闭状态。2026-09-27 19:05 轮（第 203 轮）复核：token.dat 已成功解密且有效（GET /user 200，账号 Reddict，admin/push），以带凭据方式核验：GET /repos/... 返回 has_issues=false、open_issues_count=0；GET issues?state=open 返回 0 条（另经 state=all 交叉核验亦 0 条、pulls 0 条）；POST /issues 探测返回 410（Issues has been disabled）——与第 163~202 轮结论完全一致，确认系功能关闭而非令牌问题（202/203 轮证实令牌可用，201 轮「令牌不可读」系读取方式问题）。自 2026-09-15 17:13 起已连续 203 轮独立复核，结论完全一致，均无反馈可收取、无入账。受影响功能：手机端「提交到 GitHub 反馈通道」与页面内拍板（同意/否决/待议）按钮无法提交。请在仓库 Settings → General → Features 重新勾选 Issues 即可恢复；如后续需带凭据操作（打标签/关闭 issue），可双击「重置令牌.bat」重写 token.dat。",
    "status": "待你操作",
    "cls": "b-red"
   },
